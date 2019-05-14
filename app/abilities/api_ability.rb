@@ -36,6 +36,10 @@ class ApiAbility
         can [:create, :show, :update, :destroy, :data], Trace
         can [:details, :gpx_files], User
         can [:read, :read_one, :update, :update_one, :delete_one], UserPreference
+        # 系统扩展代码
+        can [:find_by_id,:find_all,:delete,:create,:update], SysRole
+        can [:create,:find_by_user,:update], RoleUser
+        can [:find_by_id,:find_all,:delete,:create,:update], Dept
 
         if user.terms_agreed?
           can [:create, :update, :upload, :close, :subscribe, :unsubscribe, :expand_bbox], Changeset

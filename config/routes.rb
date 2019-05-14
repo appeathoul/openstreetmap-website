@@ -108,6 +108,25 @@ OpenStreetMap::Application.routes.draw do
     post "notes/editPOIexec" => "api/notes#comment"
     get "notes/getGPX" => "api/notes#index", :format => "gpx"
     get "notes/getRSSfeed" => "api/notes#feed", :format => "rss"
+
+    # 角色相关方法
+    get "role/find/:id" => "api/sys_roles#find_by_id", :id => /\d+/
+    get "role/find_all" => "api/sys_roles#find_all"
+    delete "role/delete/:ids" => "api/sys_roles#delete"
+    post "role/create" => "api/sys_roles#create"
+    post "role/update" => "api/sys_roles#update"
+
+    post "role/user/create" => "api/role_users#create"
+    get "role/user/find_by_user/:user_id" => "api/role_users#find_by_user"
+    post "role/user/update" => "api/role_users#update"
+
+    # 部门相关方法
+    get "dept/find/:id" => "api/dpets#find_by_id", :id => /\d+/
+    get "dept/find_all" => "api/dpets#find_all"
+    delete "dept/delete/:ids" => "api/dpets#delete"
+    post "dept/create" => "api/dpets#create"
+    post "dept/update" => "api/dpets#update"
+    
   end
 
   # Data browsing
