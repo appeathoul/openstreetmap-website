@@ -40,6 +40,7 @@ class ApiAbility
         can [:find_by_id,:find_all,:delete,:create,:update], SysRole
         can [:create,:find_by_user,:update], RoleUser
         can [:find_by_id,:find_all,:delete,:create,:update], Dept
+        can [:create,:find_by_dept,:update], DeptUser
 
         if user.terms_agreed?
           can [:create, :update, :upload, :close, :subscribe, :unsubscribe, :expand_bbox], Changeset

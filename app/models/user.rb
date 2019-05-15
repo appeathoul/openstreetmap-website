@@ -3,7 +3,7 @@
 # Table name: users
 #
 #  email               :string           not null
-#  id                  :integer          not null, primary key
+#  id                  :bigint(8)        not null, primary key
 #  pass_crypt          :string           not null
 #  creation_time       :datetime         not null
 #  display_name        :string           default(""), not null
@@ -33,7 +33,7 @@
 #  image_use_gravatar  :boolean          default(FALSE), not null
 #  image_content_type  :string
 #  auth_provider       :string
-#  home_tile           :integer
+#  home_tile           :bigint(8)
 #
 # Indexes
 #
@@ -165,6 +165,7 @@ class User < ActiveRecord::Base
 
   def to_xml_node
     el1 = XML::Node.new "user"
+    el1["id"] = id.to_s
     el1["display_name"] = display_name.to_s
     el1["account_created"] = creation_time.xmlschema
     if home_lat && home_lon

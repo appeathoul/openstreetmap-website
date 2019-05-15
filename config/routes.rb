@@ -126,6 +126,10 @@ OpenStreetMap::Application.routes.draw do
     delete "dept/delete/:ids" => "api/dpets#delete"
     post "dept/create" => "api/dpets#create"
     post "dept/update" => "api/dpets#update"
+
+    post "dept/user/create" => "api/dept_users#create"
+    get "dept/user/find_by_dept/:dept_id" => "api/dept_users#find_by_dept"
+    post "dept/user/update" => "api/dept_users#update"
     
   end
 

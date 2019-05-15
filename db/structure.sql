@@ -5,6 +5,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -134,7 +135,7 @@ CREATE TYPE public.user_status_enum AS ENUM (
 
 CREATE FUNCTION public.maptile_for_point(bigint, bigint, integer) RETURNS integer
     LANGUAGE c STRICT
-    AS '$libdir/libpgosm.so', 'maptile_for_point';
+    AS '/home/subin/openstreetmap-website/db/functions/libpgosm', 'maptile_for_point';
 
 
 --
@@ -143,7 +144,7 @@ CREATE FUNCTION public.maptile_for_point(bigint, bigint, integer) RETURNS intege
 
 CREATE FUNCTION public.tile_for_point(integer, integer) RETURNS bigint
     LANGUAGE c STRICT
-    AS '$libdir/libpgosm.so', 'tile_for_point';
+    AS '/home/subin/openstreetmap-website/db/functions/libpgosm', 'tile_for_point';
 
 
 --
@@ -151,8 +152,8 @@ CREATE FUNCTION public.tile_for_point(integer, integer) RETURNS bigint
 --
 
 CREATE FUNCTION public.xid_to_int4(xid) RETURNS integer
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/libpgosm.so', 'xid_to_int4';
+    LANGUAGE c STRICT
+    AS '/home/subin/openstreetmap-website/db/functions/libpgosm', 'xid_to_int4';
 
 
 SET default_tablespace = '';
@@ -222,6 +223,7 @@ CREATE TABLE public.changeset_comments (
 --
 
 CREATE SEQUENCE public.changeset_comments_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -323,6 +325,7 @@ CREATE TABLE public.client_applications (
 --
 
 CREATE SEQUENCE public.client_applications_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -530,6 +533,68 @@ CREATE SEQUENCE public.delayed_jobs_id_seq
 --
 
 ALTER SEQUENCE public.delayed_jobs_id_seq OWNED BY public.delayed_jobs.id;
+
+
+--
+-- Name: dept_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.dept_users (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    dept_id bigint NOT NULL
+);
+
+
+--
+-- Name: dept_users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.dept_users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: dept_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.dept_users_id_seq OWNED BY public.dept_users.id;
+
+
+--
+-- Name: depts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.depts (
+    id bigint NOT NULL,
+    name character varying(255),
+    parent_id bigint NOT NULL,
+    "order" bigint NOT NULL,
+    sign character varying(50)
+);
+
+
+--
+-- Name: depts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.depts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: depts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.depts_id_seq OWNED BY public.depts.id;
 
 
 --
@@ -747,6 +812,7 @@ CREATE TABLE public.issue_comments (
 --
 
 CREATE SEQUENCE public.issue_comments_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -786,6 +852,7 @@ CREATE TABLE public.issues (
 --
 
 CREATE SEQUENCE public.issues_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -898,6 +965,7 @@ CREATE TABLE public.note_comments (
 --
 
 CREATE SEQUENCE public.note_comments_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -933,6 +1001,7 @@ CREATE TABLE public.notes (
 --
 
 CREATE SEQUENCE public.notes_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -965,6 +1034,7 @@ CREATE TABLE public.oauth_nonces (
 --
 
 CREATE SEQUENCE public.oauth_nonces_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1013,6 +1083,7 @@ CREATE TABLE public.oauth_tokens (
 --
 
 CREATE SEQUENCE public.oauth_tokens_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1047,6 +1118,7 @@ CREATE TABLE public.redactions (
 --
 
 CREATE SEQUENCE public.redactions_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1121,6 +1193,7 @@ CREATE TABLE public.reports (
 --
 
 CREATE SEQUENCE public.reports_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1136,12 +1209,106 @@ ALTER SEQUENCE public.reports_id_seq OWNED BY public.reports.id;
 
 
 --
+-- Name: role_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.role_users (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    role_id bigint NOT NULL
+);
+
+
+--
+-- Name: role_users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.role_users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: role_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.role_users_id_seq OWNED BY public.role_users.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
+
+
+--
+-- Name: sys_roles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.sys_roles (
+    id bigint NOT NULL,
+    name character varying(255),
+    "order" bigint NOT NULL,
+    sign character varying(50)
+);
+
+
+--
+-- Name: sys_roles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.sys_roles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sys_roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.sys_roles_id_seq OWNED BY public.sys_roles.id;
+
+
+--
+-- Name: templates; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.templates (
+    id bigint NOT NULL,
+    name character varying,
+    sign character varying,
+    status character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: templates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.templates_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: templates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.templates_id_seq OWNED BY public.templates.id;
 
 
 --
@@ -1167,6 +1334,7 @@ CREATE TABLE public.user_blocks (
 --
 
 CREATE SEQUENCE public.user_blocks_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1211,6 +1379,7 @@ CREATE TABLE public.user_roles (
 --
 
 CREATE SEQUENCE public.user_roles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1223,6 +1392,38 @@ CREATE SEQUENCE public.user_roles_id_seq
 --
 
 ALTER SEQUENCE public.user_roles_id_seq OWNED BY public.user_roles.id;
+
+
+--
+-- Name: user_templates; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_templates (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    template bigint NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: user_templates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_templates_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_templates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_templates_id_seq OWNED BY public.user_templates.id;
 
 
 --
@@ -1411,6 +1612,20 @@ ALTER TABLE ONLY public.delayed_jobs ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: dept_users id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.dept_users ALTER COLUMN id SET DEFAULT nextval('public.dept_users_id_seq'::regclass);
+
+
+--
+-- Name: depts id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.depts ALTER COLUMN id SET DEFAULT nextval('public.depts_id_seq'::regclass);
+
+
+--
 -- Name: diary_comments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1509,6 +1724,27 @@ ALTER TABLE ONLY public.reports ALTER COLUMN id SET DEFAULT nextval('public.repo
 
 
 --
+-- Name: role_users id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.role_users ALTER COLUMN id SET DEFAULT nextval('public.role_users_id_seq'::regclass);
+
+
+--
+-- Name: sys_roles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sys_roles ALTER COLUMN id SET DEFAULT nextval('public.sys_roles_id_seq'::regclass);
+
+
+--
+-- Name: templates id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.templates ALTER COLUMN id SET DEFAULT nextval('public.templates_id_seq'::regclass);
+
+
+--
 -- Name: user_blocks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1520,6 +1756,13 @@ ALTER TABLE ONLY public.user_blocks ALTER COLUMN id SET DEFAULT nextval('public.
 --
 
 ALTER TABLE ONLY public.user_roles ALTER COLUMN id SET DEFAULT nextval('public.user_roles_id_seq'::regclass);
+
+
+--
+-- Name: user_templates id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_templates ALTER COLUMN id SET DEFAULT nextval('public.user_templates_id_seq'::regclass);
 
 
 --
@@ -1646,6 +1889,22 @@ ALTER TABLE ONLY public.current_ways
 
 ALTER TABLE ONLY public.delayed_jobs
     ADD CONSTRAINT delayed_jobs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dept_users dept_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.dept_users
+    ADD CONSTRAINT dept_users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: depts depts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.depts
+    ADD CONSTRAINT depts_pkey PRIMARY KEY (id);
 
 
 --
@@ -1817,11 +2076,35 @@ ALTER TABLE ONLY public.reports
 
 
 --
+-- Name: role_users role_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.role_users
+    ADD CONSTRAINT role_users_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: sys_roles sys_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sys_roles
+    ADD CONSTRAINT sys_roles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: templates templates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.templates
+    ADD CONSTRAINT templates_pkey PRIMARY KEY (id);
 
 
 --
@@ -1846,6 +2129,14 @@ ALTER TABLE ONLY public.user_preferences
 
 ALTER TABLE ONLY public.user_roles
     ADD CONSTRAINT user_roles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_templates user_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_templates
+    ADD CONSTRAINT user_templates_pkey PRIMARY KEY (id);
 
 
 --
@@ -2932,6 +3223,13 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170222134109'),
 ('20180204153242'),
 ('20181031113522'),
+('20190505091441'),
+('20190505104709'),
+('20190509034909'),
+('20190513092107'),
+('20190514023804'),
+('20190514062755'),
+('20190515011427'),
 ('21'),
 ('22'),
 ('23'),
