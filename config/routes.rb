@@ -130,6 +130,17 @@ OpenStreetMap::Application.routes.draw do
     post "dept/user/create" => "api/dept_users#create"
     get "dept/user/find_by_dept/:dept_id" => "api/dept_users#find_by_dept"
     post "dept/user/update" => "api/dept_users#update"
+
+    # 背景地图相关方法
+    get "map/find/:id" => "api/maps#find_by_id", :id => /\d+/
+    get "map/find_all" => "api/maps#find_all"
+    delete "map/delete/:ids" => "api/maps#delete"
+    post "map/create" => "api/maps#create"
+    post "map/update" => "api/maps#update"
+    post "map/update_map_of_user" => "api/maps#update_map_of_user"
+    delete "map/delete_map_of_user/:user_id" => "api/maps#delete_map_of_user"
+    get "map/find_map_of_user/:user_id" => "api/maps#find_map_of_user",:user_id  => /\d+/
+    
     
   end
 

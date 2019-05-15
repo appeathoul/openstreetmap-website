@@ -879,6 +879,38 @@ CREATE TABLE public.languages (
 
 
 --
+-- Name: maps; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.maps (
+    id bigint NOT NULL,
+    name character varying(255),
+    url character varying(255),
+    "order" bigint NOT NULL,
+    "default" boolean NOT NULL
+);
+
+
+--
+-- Name: maps_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.maps_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: maps_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.maps_id_seq OWNED BY public.maps.id;
+
+
+--
 -- Name: messages; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1675,6 +1707,13 @@ ALTER TABLE ONLY public.issues ALTER COLUMN id SET DEFAULT nextval('public.issue
 
 
 --
+-- Name: maps id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.maps ALTER COLUMN id SET DEFAULT nextval('public.maps_id_seq'::regclass);
+
+
+--
 -- Name: messages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1977,6 +2016,14 @@ ALTER TABLE ONLY public.issues
 
 ALTER TABLE ONLY public.languages
     ADD CONSTRAINT languages_pkey PRIMARY KEY (code);
+
+
+--
+-- Name: maps maps_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.maps
+    ADD CONSTRAINT maps_pkey PRIMARY KEY (id);
 
 
 --
@@ -3230,6 +3277,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190514023804'),
 ('20190514062755'),
 ('20190515011427'),
+('20190515015705'),
 ('21'),
 ('22'),
 ('23'),

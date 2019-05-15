@@ -41,6 +41,7 @@ class ApiAbility
         can [:create,:find_by_user,:update], RoleUser
         can [:find_by_id,:find_all,:delete,:create,:update], Dept
         can [:create,:find_by_dept,:update], DeptUser
+        can [:find_by_id,:find_all,:delete,:create,:update,:update_map_of_user,:delete_map_of_user,:find_map_of_user], Map
 
         if user.terms_agreed?
           can [:create, :update, :upload, :close, :subscribe, :unsubscribe, :expand_bbox], Changeset
