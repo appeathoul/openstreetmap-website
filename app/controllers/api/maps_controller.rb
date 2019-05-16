@@ -6,7 +6,6 @@ module Api
 
         authorize_resource
         
-
         # 根据id获取地图
         def find_by_id
             @map = Map.find(params[:id])
@@ -18,7 +17,7 @@ module Api
         def find_all
             doc = OSM::API.new.get_xml_doc
 
-            @maps = Map.all().order
+            @maps = Map.all()
       
             el = XML::Node.new "maps"
 

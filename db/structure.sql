@@ -879,15 +879,76 @@ CREATE TABLE public.languages (
 
 
 --
+-- Name: layer_tags; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.layer_tags (
+    layer_id bigint NOT NULL,
+    key character varying(100) NOT NULL,
+    name character varying(255),
+    required boolean NOT NULL,
+    optional_value character varying(255)
+);
+
+
+--
+-- Name: layers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.layers (
+    id bigint NOT NULL,
+    name character varying(255),
+    geotype character varying(10),
+    itype character varying(10),
+    "order" bigint NOT NULL,
+    icon character varying(255),
+    sign character varying(50),
+    region_code character varying(50)
+);
+
+
+--
+-- Name: layers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.layers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: layers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.layers_id_seq OWNED BY public.layers.id;
+
+
+--
 -- Name: maps; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.maps (
     id bigint NOT NULL,
+    code character varying(255),
     name character varying(255),
-    url character varying(255),
+    itype character varying(50),
+    template character varying(255),
+    projection character varying DEFAULT 'EPSG:4326'::character varying,
+    "startDate" timestamp without time zone,
+    "endDate" timestamp without time zone,
+    zoom_extent character varying(50),
+    terms_url character varying(255),
+    terms_text character varying(255),
+    overzoom boolean NOT NULL,
+    "default" boolean NOT NULL,
+    description text DEFAULT ''::text NOT NULL,
+    icon character varying(255),
+    "overlay" boolean NOT NULL,
     "order" bigint NOT NULL,
-    "default" boolean NOT NULL
+    polygon text DEFAULT ''::text NOT NULL
 );
 
 
@@ -1311,16 +1372,46 @@ ALTER SEQUENCE public.sys_roles_id_seq OWNED BY public.sys_roles.id;
 
 
 --
+-- Name: template_layers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.template_layers (
+    id bigint NOT NULL,
+    tmpl_id bigint NOT NULL,
+    layer_id bigint NOT NULL,
+    status character varying(10)
+);
+
+
+--
+-- Name: template_layers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.template_layers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: template_layers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.template_layers_id_seq OWNED BY public.template_layers.id;
+
+
+--
 -- Name: templates; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.templates (
     id bigint NOT NULL,
-    name character varying,
-    sign character varying,
-    status character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    name character varying(255),
+    itype character varying(50),
+    sign character varying(50),
+    status character varying(10)
 );
 
 
@@ -1707,6 +1798,13 @@ ALTER TABLE ONLY public.issues ALTER COLUMN id SET DEFAULT nextval('public.issue
 
 
 --
+-- Name: layers id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.layers ALTER COLUMN id SET DEFAULT nextval('public.layers_id_seq'::regclass);
+
+
+--
 -- Name: maps id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1774,6 +1872,13 @@ ALTER TABLE ONLY public.role_users ALTER COLUMN id SET DEFAULT nextval('public.r
 --
 
 ALTER TABLE ONLY public.sys_roles ALTER COLUMN id SET DEFAULT nextval('public.sys_roles_id_seq'::regclass);
+
+
+--
+-- Name: template_layers id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.template_layers ALTER COLUMN id SET DEFAULT nextval('public.template_layers_id_seq'::regclass);
 
 
 --
@@ -2019,6 +2124,22 @@ ALTER TABLE ONLY public.languages
 
 
 --
+-- Name: layer_tags layer_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.layer_tags
+    ADD CONSTRAINT layer_tags_pkey PRIMARY KEY (layer_id, key);
+
+
+--
+-- Name: layers layers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.layers
+    ADD CONSTRAINT layers_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: maps maps_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2144,6 +2265,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.sys_roles
     ADD CONSTRAINT sys_roles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: template_layers template_layers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.template_layers
+    ADD CONSTRAINT template_layers_pkey PRIMARY KEY (id);
 
 
 --
@@ -3278,6 +3407,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190514062755'),
 ('20190515011427'),
 ('20190515015705'),
+('20190515034906'),
+('20190515060423'),
+('20190515063212'),
+('20190515064207'),
+('20190515081848'),
 ('21'),
 ('22'),
 ('23'),

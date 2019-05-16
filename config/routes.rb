@@ -140,6 +140,29 @@ OpenStreetMap::Application.routes.draw do
     post "map/update_map_of_user" => "api/maps#update_map_of_user"
     delete "map/delete_map_of_user/:user_id" => "api/maps#delete_map_of_user"
     get "map/find_map_of_user/:user_id" => "api/maps#find_map_of_user",:user_id  => /\d+/
+
+    # 模板地图相关方法
+    get "template/find_by_id/:id" => "api/templates#find_by_id", :id => /\d+/
+    get "template/find_all" => "api/templates#find_all"
+    delete "template/delete/:ids" => "api/templates#delete"
+    post "template/create" => "api/templates#create"
+    post "template/update" => "api/templates#update"
+    post "template/update_tmpl_of_user" => "api/templates#update_tmpl_of_user"
+    delete "template/delete_tmpl_of_user/:user_id" => "api/templates#delete_tmpl_of_user"
+    get "template/find_tmpl_of_user/:user_id" => "api/templates#find_tmpl_of_user",:user_id  => /\d+/
+
+    # 模板图层相关方法
+    get "layer/find_by_id/:id" => "api/layers#find_by_id", :id => /\d+/
+    get "layer/find_all" => "api/layers#find_all"
+    delete "layer/delete/:ids" => "api/layers#delete"
+    post "layer/create" => "api/layers#create"
+    post "layer/update" => "api/layers#update"
+
+    # 模板图层相关方法
+    get "layer/tag/find_by_id/:id" => "api/layer_tags#find_by_id", :id => /\d+/
+    delete "layer/tag/delete" => "api/layer_tags#delete"                                                                                         
+    post "layer/tag/create" => "api/layer_tags#create"
+    post "layer/tag/update" => "api/layer_tags#update"
     
     
   end
