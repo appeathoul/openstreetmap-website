@@ -22,6 +22,8 @@ class ApiAbility
       can [:history, :version], OldNode
       can [:history, :version], OldWay
       can [:history, :version], OldRelation
+
+      can [:find_all], Map
     end
 
     if user
@@ -41,9 +43,10 @@ class ApiAbility
         can [:create,:find_by_user,:update], RoleUser
         can [:find_by_id,:find_all,:delete,:create,:update], Dept
         can [:create,:find_by_dept,:update], DeptUser
-        can [:find_by_id,:find_all,:delete,:create,:update,:update_map_of_user,:delete_map_of_user,:find_map_of_user], Map
+        can [:find_by_id,:delete,:create,:update,:update_map_of_user,:delete_map_of_user,:find_map_of_user], Map
         can [:find_by_id,:find_all,:delete,:create,:update,:update_tmpl_of_user,:delete_tmpl_of_user,:find_tmpl_of_user], Template
         can [:find_by_id,:find_all,:delete,:create,:update], LayerTag
+        # END
 
         if user.terms_agreed?
           can [:create, :update, :upload, :close, :subscribe, :unsubscribe, :expand_bbox], Changeset
