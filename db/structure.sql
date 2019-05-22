@@ -1617,7 +1617,8 @@ CREATE TABLE public.users (
     image_use_gravatar boolean DEFAULT false NOT NULL,
     image_content_type character varying,
     auth_provider character varying,
-    home_tile bigint
+    home_tile bigint,
+    tou_agreed timestamp without time zone
 );
 
 
@@ -2531,6 +2532,20 @@ CREATE INDEX gpx_files_visible_visibility_idx ON public.gpx_files USING btree (v
 
 
 --
+-- Name: index_acls_on_address; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_acls_on_address ON public.acls USING gist (address inet_ops);
+
+
+--
+-- Name: index_acls_on_domain; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_acls_on_domain ON public.acls USING btree (domain);
+
+
+--
 -- Name: index_changeset_comments_on_created_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3398,6 +3413,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20161011010929'),
 ('20170222134109'),
 ('20180204153242'),
+('20181020114000'),
 ('20181031113522'),
 ('20190505091441'),
 ('20190505104709'),
@@ -3412,6 +3428,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190515063212'),
 ('20190515064207'),
 ('20190515081848'),
+('20190518115041'),
 ('21'),
 ('22'),
 ('23'),

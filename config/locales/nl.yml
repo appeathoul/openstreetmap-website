@@ -4,6 +4,7 @@
 # Author: Abijeet Patro
 # Author: Arent
 # Author: Bouman4
+# Author: CGID
 # Author: Carsrac
 # Author: Donarreiskoffer
 # Author: Elroy
@@ -18,6 +19,7 @@
 # Author: JaapDeKleine
 # Author: Jochempluim
 # Author: Joost schouppe
+# Author: Jouke
 # Author: Ldp
 # Author: Lemondoge
 # Author: M!dgard
@@ -54,6 +56,7 @@ nl:
     errors:
       messages:
         invalid_email_address: '"%s" lijkt geen geldig e-mailadres te zijn.'
+        email_address_not_routable: is niet routeerbaar
     models:
       acl: Rechtenoverzicht
       changeset: Wijzigingenset
@@ -382,7 +385,7 @@ nl:
         one: '%{count} reactie'
         other: '%{count} reacties'
       edit_link: Bewerk dit bericht
-      hide_link: Veberg dit bericht
+      hide_link: Verberg dit bericht
       confirm: Bevestigen
       report: Rapporteer dit bericht
     diary_comment:
@@ -659,7 +662,7 @@ nl:
           garages: Garages
           grass: Gras
           greenfield: Stadsgroen
-          industrial: Industrieel gebied
+          industrial: Industriegebied
           landfill: Stortplaats
           meadow: Weide
           military: Militair gebied
@@ -1488,14 +1491,17 @@ nl:
           <a href="http://www.gu.gov.si/en/">Surveying and Mapping Authority</a> en
           <a href="http://www.mkgp.gov.si/en/">Ministerie van Landbouw, Bosbouw en Voedsel</a>
           (openbare informatie van Slovenië).
+        contributors_es_html: |-
+          <strong>Spanje</strong>: Bevat data afkomstig van het Spaans Nationaal Geografisch Instituut (<a href="http://www.ign.es/">IGN</a>) en het Nationaal Cartografisch Systeem (<a href="http://www.scne.es/">SCNE</a>)
+          gelicenseerd voor hergebruik onder <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
         contributors_za_html: |-
           <strong>Zuid-Afrika</strong>: Bevat gegevens afkomstig uit
           <a href="http://www.ngi.gov.za/">Chief Directorate:
           National Geo-Spatial Information</a>, auteursrechten voor de Staat voorbehouden.
         contributors_gb_html: |-
           <strong>Verenigd Koninkrijk</strong>: bevat gegevens van
-          Ordnance Survey &copy; Crown Copyright en databaserechten
-          2010-2012.
+          Ordnance Survey &copy; Crown copyright en databaserechten
+          2010-2019.
         contributors_footer_1_html: |-
           Voor meer gegevens over deze en andere bronnen die gebruikt zijn
           voor het verbeteren van OpenStreetMap, kunt u de <a
@@ -1716,7 +1722,7 @@ nl:
           - Gemene grond
           - weide
           retail: Winkelgebied
-          industrial: Industrieel gebied
+          industrial: Industriegebied
           commercial: Commercieel gebied
           heathland: Heide
           lake:
@@ -2152,9 +2158,6 @@ nl:
     terms:
       title: Bijdragersovereenkomst
       heading: Voorwaarden voor bijdragen
-      read and accept: Lees de overeenkomst hieronder in en klik op de knop "Instemmen"
-        om te bevestigen dat u de voorwaarden van deze overeenkomst voor uw bestaande
-        en toekomstige bijdragen aanvaardt.
       consider_pd: Met inachtneming van de bovenstaande overeenkomst, bevinden mijn
         bijdragen zich in het publieke domein
       consider_pd_why: wat is dit?
@@ -2162,7 +2165,6 @@ nl:
       guidance: 'Meer informatie om de voorwaarden beter te kunnen begrijpen: een
         <a href="%{summary}">leesbare samenvatting</a> en <a href="%{translations}">informele
         vertalingen</a>'
-      agree: Aanvaarden
       declined: https://wiki.openstreetmap.org/wiki/Contributor_Terms_Declined
       decline: Weigeren
       you need to accept or decline: Lees de nieuwe Bijdragersvoorwaarden en besluit

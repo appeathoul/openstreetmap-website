@@ -33,7 +33,8 @@
 #  image_use_gravatar  :boolean          default(FALSE), not null
 #  image_content_type  :string
 #  auth_provider       :string
-#  home_tile           :bigint(8)
+#  home_tile           :integer
+#  tou_agreed          :datetime
 #
 # Indexes
 #
