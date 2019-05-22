@@ -665,7 +665,20 @@
             "others": {
                 "description": "其他要素",
                 "tooltip": "其他东西"
+            },
+            "GRID_CITY":{
+                "description": "铜川市（第一级）",
+                "tooltip": "铜川市（第一级）"
+            },
+            "GRID_REGION":{
+                "description": "区县（第二级）",
+                "tooltip": "区县（第二级）"
+            },
+            "GRID_STREET":{
+                "description": "街道办（第三级）",
+                "tooltip": "街道办（第三级）"
             }
+            
         },
         "area_fill": {
             "wireframe": {

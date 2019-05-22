@@ -100,5 +100,86 @@ module Api
 
       render :xml => doc.to_s
     end
+
+    # 根据图层标签获取OSM数据
+    def find_by_tag
+
+      # 获取查询条件
+      where_sql = ""
+
+      if params[:key] && params[:value]
+        where_sql = "current_way_tags.k = '" + params[:key]+ "' AND current_way_tags.v = '" + params[:value] + "'"
+      else 
+        where_sql = "current_way_tags.k = 'regionlevel' AND current_way_tags.v = '2'"
+      end
+
+      doc = OSM::API.new.get_xml_doc
+
+      # 根据查询条件获取路径
+      ways = Way.includes(:way_nodes).joins(:way_tags).where(where_sql)
+      # 遍历输出路径
+      ways.each do |way|
+        if way.visible?
+          # doc.root << way.to_xml_node
+          doc.root << way.to_simple_xml_node
+        end
+      end
+
+      # 获取路径编号集合
+      way_ids = ways.collect(&:id)
+
+      visible_nodes = {}
+
+      # 遍历输出节点
+      ways.each do |way|
+        if way.visible?
+          # 获取路径节点id集合
+          node_ids = way.way_nodes.collect(&:node_id)
+          # 获取路径节点
+          nodes = Node.where(:id => node_ids)
+          # 获取节点
+          nodes.each do |node|
+            el = XML::Node.new "node"
+            el["id"] = node.id.to_s
+            el["lat"] = node.lat.to_s
+            el["lon"] = node.lon.to_s
+              # doc.root << node.to_xml_node
+              doc.root << node.to_simple_xml_node
+              # visible_nodes[node.id] = node
+          end
+        end
+      end
+
+      # relations = Relation.nodes(visible_nodes.keys).visible +
+      #             Relation.ways(way_ids).visible
+
+
+      # relations += Relation.relations(relations.collect(&:id)).visible
+
+      # relations.uniq.each do |relation|
+      #   doc.root << relation.to_xml_node
+      # end
+
+      response.headers["Content-Disposition"] = "attachment; filename=\"map.osm\""
+
+      render :xml => doc.to_s
+    end
+
+
+    def xml_from_way(way)
+      el = XML::Node.new "way"
+      el["id"] = way.id.to_s
+
+      add_metadata_to_xml_node(el, way)
+
+      way.way_nodes.each do |nd|  
+        node_el = XML::Node.new "nd"
+        node_el["ref"] = nd.node_id
+        el << node_el
+      end
+
+      add_tags_to_xml_node(el,way. way_tags)
+    end
+    
   end
 end

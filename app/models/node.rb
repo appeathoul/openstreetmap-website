@@ -222,6 +222,29 @@ class Node < ActiveRecord::Base
     el
   end
 
+  # 扩增方法 简单返回XML字符串
+  # is_tag 是否查询节点标签属性，默认为false
+  def to_simple_xml_node(is_tag = false)
+    el = XML::Node.new "node"
+    el["id"] = id.to_s
+
+    # 替换元数据属性方法
+    el["timestamp"] = timestamp.to_s
+    el["version"] = version.to_s
+    el["visible"] = visible.to_s
+
+    if visible?
+      el["lat"] = lat.to_s
+      el["lon"] = lon.to_s
+    end
+
+    if is_tag
+      add_tags_to_xml_node(el, node_tags)
+    end
+
+    el
+  end
+
   def tags_as_hash
     tags
   end

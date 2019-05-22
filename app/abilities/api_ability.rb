@@ -6,7 +6,7 @@ class ApiAbility
   def initialize(user)
     can :show, :capability
     can :index, :change
-    can :index, :map
+    can [:index,:find_by_tag], :map
     can :show, :permission
     can [:search_all, :search_nodes, :search_ways, :search_relations], :search
     can [:trackpoints], :swf
@@ -24,6 +24,15 @@ class ApiAbility
       can [:history, :version], OldRelation
 
       can [:find_all], Map
+       # 系统扩展代码
+       can [:find_by_id,:find_all,:delete,:create,:update], SysRole
+       can [:create,:find_by_user,:update], RoleUser
+       can [:find_by_id,:find_all,:delete,:create,:update], Dept
+       can [:create,:find_by_dept,:update], DeptUser
+       can [:find_by_id,:find_all,:delete,:create,:update,:update_map_of_user,:delete_map_of_user,:find_map_of_user], Map
+       can [:find_by_id,:find_all,:delete,:create,:update,:update_tmpl_of_user,:delete_tmpl_of_user,:find_tmpl_of_user], Template
+       can [:find_by_id,:find_all,:delete,:create,:update], LayerTag
+       # END
     end
 
     if user
@@ -38,15 +47,15 @@ class ApiAbility
         can [:create, :show, :update, :destroy, :data], Trace
         can [:details, :gpx_files], User
         can [:read, :read_one, :update, :update_one, :delete_one], UserPreference
-        # 系统扩展代码
-        can [:find_by_id,:find_all,:delete,:create,:update], SysRole
-        can [:create,:find_by_user,:update], RoleUser
-        can [:find_by_id,:find_all,:delete,:create,:update], Dept
-        can [:create,:find_by_dept,:update], DeptUser
-        can [:find_by_id,:delete,:create,:update,:update_map_of_user,:delete_map_of_user,:find_map_of_user], Map
-        can [:find_by_id,:find_all,:delete,:create,:update,:update_tmpl_of_user,:delete_tmpl_of_user,:find_tmpl_of_user], Template
-        can [:find_by_id,:find_all,:delete,:create,:update], LayerTag
-        # END
+        # # 系统扩展代码
+        # can [:find_by_id,:find_all,:delete,:create,:update], SysRole
+        # can [:create,:find_by_user,:update], RoleUser
+        # can [:find_by_id,:find_all,:delete,:create,:update], Dept
+        # can [:create,:find_by_dept,:update], DeptUser
+        # can [:find_by_id,:delete,:create,:update,:update_map_of_user,:delete_map_of_user,:find_map_of_user], Map
+        # can [:find_by_id,:find_all,:delete,:create,:update,:update_tmpl_of_user,:delete_tmpl_of_user,:find_tmpl_of_user], Template
+        # can [:find_by_id,:find_all,:delete,:create,:update], LayerTag
+        # # END
 
         if user.terms_agreed?
           can [:create, :update, :upload, :close, :subscribe, :unsubscribe, :expand_bbox], Changeset

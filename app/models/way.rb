@@ -144,6 +144,29 @@ class Way < ActiveRecord::Base
     el
   end
 
+  # 扩展方法 简单返回XML字符串
+  def to_simple_xml_node
+    el = XML::Node.new "way"
+    el["id"] = id.to_s
+
+    # add_metadata_to_xml_node(el, self,{},{})
+
+    # 替换元数据属性方法
+    el["timestamp"] = timestamp.to_s
+    el["version"] = version.to_s
+    el["visible"] = visible.to_s
+
+    way_nodes.each do |nd|  
+      node_el = XML::Node.new "nd"
+      node_el["ref"] = nd.node_id.to_s
+      el << node_el
+    end
+
+    add_tags_to_xml_node(el,way_tags)
+
+    el
+  end
+
   def nds
     @nds ||= way_nodes.collect(&:node_id)
   end
