@@ -886,7 +886,7 @@ CREATE TABLE public.layer_tags (
     layer_id bigint NOT NULL,
     key character varying(100) NOT NULL,
     name character varying(255),
-    required boolean NOT NULL,
+    required boolean DEFAULT false NOT NULL,
     optional_value character varying(255)
 );
 

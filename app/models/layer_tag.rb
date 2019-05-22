@@ -5,7 +5,7 @@
 #  layer_id       :bigint(8)        not null, primary key
 #  key            :string(100)      not null, primary key
 #  name           :string(255)
-#  required       :boolean          not null
+#  required       :boolean          default(FALSE), not null
 #  optional_value :string(255)
 #
 
