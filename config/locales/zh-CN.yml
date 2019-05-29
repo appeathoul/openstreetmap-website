@@ -2089,6 +2089,8 @@ zh-CN:
       return to profile: 返回基本信息
       flash update success confirm needed: 成功更新用户信息。 查看您的邮箱以确认您的新邮箱地址。
       flash update success: 成功更新用户信息。
+      no_password: 请输入密码！
+      miss password: 密码输入错误！
     confirm:
       heading: 检查您的电子邮件！
       introduction_1: 我们给您发送了确认邮件。

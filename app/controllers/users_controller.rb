@@ -260,6 +260,11 @@ class UsersController < ApplicationController
   def login
     session[:referer] = params[:referer] if params[:referer]
 
+    # 未输入密码提示
+    if params[:username].present? && !params[:password].present?
+      flash.now[:notice] = t "users.account.no_password"
+    end
+
     if params[:username].present? && params[:password].present?
       session[:remember_me] ||= params[:remember_me]
       password_authentication(params[:username], params[:password])

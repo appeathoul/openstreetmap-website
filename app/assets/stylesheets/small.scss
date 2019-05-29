@@ -243,6 +243,11 @@ body.small {
 
       input[name='commit'] {
         text-align: center;
+        width: 290px;
+        height: 40px;
+        font-size: 20px;
+        margin-left: 55px;
+        background-image: linear-gradient(to right,#3677f5,#4696f5)
       }
     }
   }
