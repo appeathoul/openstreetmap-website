@@ -200,3 +200,50 @@ body.small {
   }
 
 }
+
+
+/** 登录界面样式修改 */
+.users-login {
+  background: url('/attachments/login/login_bg.png') no-repeat;
+  background-size: cover;  
+
+  .closed,.content-heading {
+    display: none;
+  }
+
+  .content-body {
+    .content-inner {
+      #login_login {
+        position: absolute;
+        background-color: #FFF;
+        width: 800px;
+        height: 450px;
+        vertical-align: middle;
+        margin-top: 20%;
+      }
+
+      .login_logo {
+        text-align: center;
+        margin-top: 60px;
+      }
+
+      .form-row {
+        text-align: center;
+        margin-top: 30px;
+
+        input {
+          width: 290px;
+          font-size: 24px;
+        }
+      }
+
+      #openid_login_form,.deemphasize,.standard-label,#remember_me {
+        display: none;
+      }
+
+      input[name='commit'] {
+        text-align: center;
+      }
+    }
+  }
+}

@@ -153,7 +153,13 @@ module Api
             doc = OSM::API.new.get_xml_doc
             el = XML::Node.new "templates"
 
-            @prefences = UserPreference.where("user_id = ? AND k = 'template'", params[:user_id])
+            id = current_user.id
+            
+            if params[:user_id]
+                id = params[:user_id]
+            end
+
+            @prefences = UserPreference.where("user_id = ? AND k = 'template'", id)
 
             if @prefences.length == 1
                 tmpl_id = @prefences[0].v
@@ -181,6 +187,7 @@ module Api
                 @layer = Layer.find(layer.layer_id)
                 # 单个图层节点
                 el_layer =  @layer.to_xml_node
+                el_layer['status'] = layer.status
                 # 图层属性节点
                 el_tags = XML::Node.new "tags"
 

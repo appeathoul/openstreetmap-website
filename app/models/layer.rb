@@ -10,6 +10,7 @@
 #  icon        :string(255)
 #  sign        :string(50)
 #  region_code :string(50)
+#  refer       :bigint(8)
 #
 
 class Layer  < ActiveRecord::Base
@@ -24,11 +25,13 @@ class Layer  < ActiveRecord::Base
         
         el["id"] = id.to_s
         el["name"] = name.to_s
-        el["itype"] = itype.to_s
+        el["type"] = itype.to_s
         el["geotype"] = geotype.to_s
         el["order"] = order.to_s
         el["sign"] = sign.to_s
+        el["icon"] = icon.to_s
         el["region_code"] = region_code.to_s
+        el["refer"] = refer.to_s
     
         el
     end

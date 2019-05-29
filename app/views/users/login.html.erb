@@ -12,6 +12,9 @@
 
     <p class='deemphasize'><%= t ".no account" %> <%= link_to t(".register now"), :action => :new, :referer => params[:referer] %></p>
 
+    <div class='login_logo'>
+      <image src='/attachments/login/logo.png' />
+    </div>
     <div id="loginForm" class="standard-form">
 
       <fieldset>
@@ -19,11 +22,17 @@
           <label for="username" class="standard-label">
             <%= t ".email or username" %>
           </label>
+          <label for="username">
+            用户名：
+          </label>
           <%= text_field_tag "username", params[:username], :tabindex => 1 %>
         </div>
         <div class="form-row">
           <label for="password" class="standard-label">
             <%= t ".password" %>
+          </label>
+          <label for="username">
+            &nbsp;&nbsp;&nbsp;密码：
           </label>
           <%= password_field_tag "password", "", :tabindex => 2 %>
         </div>
@@ -32,7 +41,7 @@
         </span>
       </fieldset>
 
-      <fieldset>
+      <fieldset style="text-align:center;">
         <%= check_box_tag "remember_me", "yes", params[:remember_me] == "yes", :tabindex => 3 %>
         <label for="remember_me" class="standard-label">
           <%= t ".remember" %>

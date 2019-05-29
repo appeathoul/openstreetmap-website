@@ -153,6 +153,7 @@ OpenStreetMap::Application.routes.draw do
     post "template/update_tmpl_of_user" => "api/templates#update_tmpl_of_user"
     delete "template/delete_tmpl_of_user/:user_id" => "api/templates#delete_tmpl_of_user"
     get "template/find_tmpl_of_user/:user_id" => "api/templates#find_tmpl_of_user",:user_id  => /\d+/
+    get "template/find_tmpl" => "api/templates#find_tmpl_of_user"
 
     # 模板图层相关方法
     get "layer/find_by_id/:id" => "api/layers#find_by_id", :id => /\d+/

@@ -110,6 +110,7 @@ module Api
       if params[:key] && params[:value]
         where_sql = "current_way_tags.k = '" + params[:key]+ "' AND current_way_tags.v = '" + params[:value] + "'"
       else 
+        # TODO 后期注释，直接返回语句
         where_sql = "current_way_tags.k = 'regionlevel' AND current_way_tags.v = '2'"
       end
 
@@ -143,9 +144,9 @@ module Api
             el["id"] = node.id.to_s
             el["lat"] = node.lat.to_s
             el["lon"] = node.lon.to_s
-              # doc.root << node.to_xml_node
-              doc.root << node.to_simple_xml_node
-              # visible_nodes[node.id] = node
+            # doc.root << node.to_xml_node
+            doc.root << node.to_simple_xml_node
+            visible_nodes[node.id] = node
           end
         end
       end
