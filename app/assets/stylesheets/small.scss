@@ -252,3 +252,13 @@ body.small {
     }
   }
 }
+
+/** 授权页面样式修改 */
+.oauth-authorize {
+  background: url('/attachments/login/login_bg.png') no-repeat;
+  background-size: cover;  
+
+  .closed {
+    display: none;
+  }
+}
