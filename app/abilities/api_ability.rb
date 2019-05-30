@@ -6,7 +6,7 @@ class ApiAbility
   def initialize(user)
     can :show, :capability
     can :index, :change
-    can [:index,:find_by_tag], :map
+    can [:index,:find_by_tag,:custom], :map
     can :show, :permission
     can [:search_all, :search_nodes, :search_ways, :search_relations], :search
     can [:trackpoints], :swf

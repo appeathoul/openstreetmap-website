@@ -59,6 +59,7 @@ OpenStreetMap::Application.routes.draw do
 
     # 获取数据扩展
     get "map_tag" => "api/map#find_by_tag"
+    get "map_custom" => "api/map#custom"
 
     get "trackpoints" => "api/tracepoints#index"
 

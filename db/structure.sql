@@ -904,7 +904,9 @@ CREATE TABLE public.layers (
     icon character varying(255),
     sign character varying(50),
     region_code character varying(50),
-    refer bigint
+    refer bigint,
+    condition character varying,
+    editlevel bigint
 );
 
 
@@ -3431,6 +3433,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190515081848'),
 ('20190518115041'),
 ('20190528011859'),
+('20190530022130'),
 ('21'),
 ('22'),
 ('23'),

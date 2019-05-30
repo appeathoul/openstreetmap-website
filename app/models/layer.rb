@@ -11,6 +11,8 @@
 #  sign        :string(50)
 #  region_code :string(50)
 #  refer       :bigint(8)
+#  condition   :string
+#  editlevel   :bigint(8)
 #
 
 class Layer  < ActiveRecord::Base
@@ -32,7 +34,9 @@ class Layer  < ActiveRecord::Base
         el["icon"] = icon.to_s
         el["region_code"] = region_code.to_s
         el["refer"] = refer.to_s
-    
+        el["condition"] = condition.to_s
+        el["editlevel"] = editlevel.to_s
+
         el
     end
 end
