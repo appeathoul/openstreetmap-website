@@ -131,24 +131,26 @@ module Api
 
       visible_nodes = {}
 
+      node_ids = []
       # 遍历输出节点
       ways.each do |way|
         if way.visible?
           # 获取路径节点id集合
-          node_ids = way.way_nodes.collect(&:node_id)
-          # 获取路径节点
-          nodes = Node.where(:id => node_ids)
-          # 获取节点
-          nodes.each do |node|
-            el = XML::Node.new "node"
-            el["id"] = node.id.to_s
-            el["lat"] = node.lat.to_s
-            el["lon"] = node.lon.to_s
-            # doc.root << node.to_xml_node
-            doc.root << node.to_simple_xml_node
-            visible_nodes[node.id] = node
-          end
+          node_ids += way.way_nodes.collect(&:node_id)
         end
+      end
+
+      # 获取路径节点
+      nodes = Node.where(:id => node_ids.uniq)
+      # 获取节点
+      nodes.each do |node|
+        el = XML::Node.new "node"
+        el["id"] = node.id.to_s
+        el["lat"] = node.lat.to_s
+        el["lon"] = node.lon.to_s
+        # doc.root << node.to_xml_node
+        doc.root << node.to_simple_xml_node
+        visible_nodes[node.id] = node
       end
 
       # relations = Relation.nodes(visible_nodes.keys).visible +
@@ -229,7 +231,8 @@ module Api
       end
 
       # 获取范围内节点和路径节点的交集
-      nodes_to_fetch = list_of_way_nodes.uniq&node_ids
+      nodes_to_fetch = list_of_way_nodes.uniq
+      # &node_idsk
       # nodes_to_fetch = (list_of_way_nodes.uniq - node_ids) - [0]
       # 获取节点对象集合
       nodes = Node.includes(:node_tags).find(nodes_to_fetch)

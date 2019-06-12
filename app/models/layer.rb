@@ -13,6 +13,7 @@
 #  refer       :bigint(8)
 #  condition   :string
 #  editlevel   :bigint(8)
+#  key         :string
 #
 
 class Layer  < ActiveRecord::Base
@@ -26,6 +27,7 @@ class Layer  < ActiveRecord::Base
         el = XML::Node.new "layer"
         
         el["id"] = id.to_s
+        el["key"] = key.to_s
         el["name"] = name.to_s
         el["type"] = itype.to_s
         el["geotype"] = geotype.to_s

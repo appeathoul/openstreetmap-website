@@ -24,6 +24,7 @@ xml.tag! "user", :id => user.id,
                          :active => user.blocks_created.active.size
     end
   end
+  xml.tag! "geojsons", user.geojsons.getjson(user) if user.geojsons.getjson(user)
   if current_user && current_user == user
     if user.home_lat && user.home_lon
       xml.tag! "home", :lat => user.home_lat,

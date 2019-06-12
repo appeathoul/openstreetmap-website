@@ -906,7 +906,8 @@ CREATE TABLE public.layers (
     region_code character varying(50),
     refer bigint,
     condition character varying,
-    editlevel bigint
+    editlevel bigint,
+    key character varying
 );
 
 
@@ -1476,6 +1477,37 @@ ALTER SEQUENCE public.user_blocks_id_seq OWNED BY public.user_blocks.id;
 
 
 --
+-- Name: user_geojsons; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_geojsons (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    template_id bigint NOT NULL,
+    geojson text
+);
+
+
+--
+-- Name: user_geojsons_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_geojsons_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_geojsons_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_geojsons_id_seq OWNED BY public.user_geojsons.id;
+
+
+--
 -- Name: user_preferences; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1900,6 +1932,13 @@ ALTER TABLE ONLY public.user_blocks ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: user_geojsons id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_geojsons ALTER COLUMN id SET DEFAULT nextval('public.user_geojsons_id_seq'::regclass);
+
+
+--
 -- Name: user_roles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2293,6 +2332,14 @@ ALTER TABLE ONLY public.templates
 
 ALTER TABLE ONLY public.user_blocks
     ADD CONSTRAINT user_blocks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_geojsons user_geojsons_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_geojsons
+    ADD CONSTRAINT user_geojsons_pkey PRIMARY KEY (id);
 
 
 --
@@ -3434,6 +3481,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190518115041'),
 ('20190528011859'),
 ('20190530022130'),
+('20190530084824'),
+('20190606014232'),
 ('21'),
 ('22'),
 ('23'),

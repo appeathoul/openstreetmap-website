@@ -61,6 +61,7 @@ class User < ActiveRecord::Base
   has_many :friend_users, :through => :friends, :source => :befriendee
   has_many :tokens, :class_name => "UserToken"
   has_many :preferences, :class_name => "UserPreference"
+  has_many :geojsons, :class_name => "UserGeojson", :foreign_key => :user_id
   has_many :changesets, -> { order(:created_at => :desc) }
   has_many :changeset_comments, :foreign_key => :author_id
   has_and_belongs_to_many :changeset_subscriptions, :class_name => "Changeset", :join_table => "changesets_subscribers", :foreign_key => "subscriber_id"
