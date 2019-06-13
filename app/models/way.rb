@@ -155,6 +155,7 @@ class Way < ActiveRecord::Base
     el["timestamp"] = timestamp.to_s
     el["version"] = version.to_s
     el["visible"] = visible.to_s
+    el["changeset"] = changeset_id.to_s
 
     way_nodes.each do |nd|  
       node_el = XML::Node.new "nd"

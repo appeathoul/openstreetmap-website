@@ -10,7 +10,7 @@
 #  icon        :string(255)
 #  sign        :string(50)
 #  region_code :string(50)
-#  refer       :bigint(8)
+#  refer       :string
 #  condition   :string
 #  editlevel   :bigint(8)
 #  key         :string

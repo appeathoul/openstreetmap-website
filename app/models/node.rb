@@ -232,6 +232,7 @@ class Node < ActiveRecord::Base
     el["timestamp"] = timestamp.to_s
     el["version"] = version.to_s
     el["visible"] = visible.to_s
+    el["changeset"] = changeset_id.to_s
 
     if visible?
       el["lat"] = lat.to_s
